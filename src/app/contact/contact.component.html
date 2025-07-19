@@ -1,0 +1,96 @@
+<div>
+  <h2 class="text-center mb-4">Contact Us</h2>
+</div>
+
+<div class="row">
+  <!-- Contact Info -->
+  <div class="left-container col-md-6">
+    <!-- Left contact info -->
+    <div class="p-3 bg-light rounded custom-shadow h-100">
+      <p class="text-black"><strong>📞 Phone:</strong> (123) 456-7890</p>
+      <p class="text-black"><strong>✉️ Email:</strong> {{ email }}</p>
+      <p>
+        <strong class="text-black">📍 Address:</strong> 123 Main Street, Markham
+        North, ON, Canada
+      </p>
+      <p class="text-black">
+        <strong>⏰ Hours:</strong> Mon–Sun: 11:00 AM – 10:00 PM
+      </p>
+      <!-- Google Maps Embed -->
+      <div class="map-container mt-5 shadow-sm">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.6799258665033!2d-79.4086!3d43.7615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b33fe1dc6ef0d%3A0x63c69b29d1443c60!2s123%20Main%20Street%2C%20North%20York%2C%20ON%2C%20Canada!5e0!3m2!1sen!2sca!4v1721319512345"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        >
+        </iframe>
+        <div class="map-overlay"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact/Reservation Form -->
+  <div class="col-md-6">
+    <div class="p-4 bg-light rounded custom-shadow">
+      <h4 class="text-black mb-3">Send a Message or Request a Table</h4>
+
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label text-black">Your Name</label>
+          <input type="text" class="form-control border-0" id="name" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label text-black">Email Address</label>
+          <input
+            type="email"
+            class="form-control border-0"
+            id="email"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="guests" class="form-label text-black"
+            >Number of Guests</label
+          >
+          <input
+            type="number"
+            class="form-control border-0"
+            id="guests"
+            min="1"
+            max="20"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="datetime" class="form-label text-black"
+            >Preferred Date & Time</label
+          >
+          <input
+            type="datetime-local"
+            class="form-control border-0"
+            id="datetime"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label text-black"
+            >Message / Special Requests</label
+          >
+          <textarea
+            class="form-control border-0"
+            id="message"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
