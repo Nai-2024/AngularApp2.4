@@ -1,0 +1,207 @@
+
+
+<!-- Title -->
+<h2
+  class="text-center mb-4"
+  style="color: #040404; font-family: 'Georgia', serif"
+>
+  Our Menu
+</h2>
+
+<!-- Dropdown -->
+<div class="text-center mb-5">
+  <select class="dropdown-select mx-auto" [(ngModel)]="selectedCategory">
+    <option value="">All Categories</option>
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option>
+  </select>
+</div>
+
+<!-- Menu List -->
+<div class="container-fluid">
+  <div class="row gy-4">
+    <div class="col-12" *ngFor="let item of getFilteredItems(); let i = index">
+      <div
+        class="d-flex align-items-center p-3 rounded shadow-sm"
+        style="background-color: #4a3f31"
+      >
+        <!-- Image -->
+        <img
+          [src]="item.image"
+          alt="{{ item.name }}"
+          class="menu-img rounded me-3"
+          style="
+            width: 120px;
+            height: 100px;
+            object-fit: cover;
+            cursor: pointer;
+          "
+        />
+
+        <!-- Description & Name -->
+        <div class="flex-grow-1">
+          <h5 class="mb-1" style="color: #d7c49e">{{ item.name }}</h5>
+          <p class="mb-0 text-light">{{ item.description }}</p>
+        </div>
+
+        <!-- Price -->
+        <div
+          class="d-flex flex-column align-items-end"
+          style="
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-width: 90px;
+          "
+        >
+          <div>${{ item.price }}</div>
+          <select
+            [(ngModel)]="item.quantity"
+            style="
+              margin-top: 8px;
+              background-color: #6b5b44;
+              color: #fff;
+              border: none;
+              border-radius: 4px;
+              padding: 4px 6px;
+              font-size: 0.9rem;
+            "
+          >
+            <option
+              *ngFor="let qty of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+              [value]="qty"
+            >
+              {{ qty }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Selected Items Summary -->
+<div class="container mt-5" *ngIf="getSelectedItems().length > 0">
+  <h4 class="mb-3" style="color: #040404">Selected Items</h4>
+
+  <ul class="list-group mb-3">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+      *ngFor="let item of getSelectedItems()"
+      style="
+        color: #000000;
+        border: none;
+        border-bottom: 1px solid #7a6955;
+        border-radius: 0;
+      "
+    >
+      <div>
+        <strong>{{ item.name }}</strong>
+        <span class="text-muted ms-2">x{{ item.quantity }}</span>
+      </div>
+      <span style="color: #4a3f31; font-weight: bold">
+        ${{ item.price * item.quantity | number : "1.2-2" }}
+      </span>
+    </li>
+  </ul>
+
+  <div
+    class="text-end"
+    style="color: #000000; font-size: 1.2rem; font-weight: bold"
+  >
+    Total: ${{ getTotalPrice() | number : "1.2-2" }}
+  </div>
+
+  <!-- Place Order Button -->
+  <div class="text-end">
+    <button class="order-btn" (click)="placeOrder()">Place Order</button>
+    <!-- Order Confirmation Message -->
+  </div>
+</div>
+
+<div
+  class="alert alert-success text-center mt-3"
+  *ngIf="orderPlaced"
+  style="font-size: 1.2rem; font-weight: 500"
+>
+  Your order has been placed!<br />
+  Order Number: <strong>{{ orderNumber }}</strong>
+</div>
+
+
+----
+import { Component, OnInit } from "@angular/core";
+import { AppDataService } from "../shared-module/service/app-data.service";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+
+@Component({
+  selector: "app-menu",
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: "./menu.component.html",
+  styleUrl: "./menu.component.css",
+})
+export class MenuComponent implements OnInit {
+  menuItems: any[] = [];          // Array to hold menu items with quantity added
+  categories: string[] = [];      // List of categories for filtering menu
+  selectedCategory: string = "";  // Currently selected category for filtering
+
+  orderPlaced: boolean = false;   // Flag to show order success message
+  orderNumber: string = "";       // Random generated order number on placing order
+
+    // constructor injects the data service to access menu data
+  constructor(private dataService: AppDataService) {}
+
+   // Lifecycle hook runs after component initialization
+  ngOnInit(): void {
+     // Get menu items from the data service and add quantity property defaulted to 0
+    this.menuItems = this.dataService.getMenuItems().map((item) => ({
+      ...item,
+      quantity: 0, // default quantity
+    }));
+    // Get the categories from the data service
+    this.categories = this.dataService.categories;
+  }
+
+   // Return menu items filtered by selected category, or all if none selected
+  getFilteredItems() {
+    if (!this.selectedCategory) return this.menuItems;
+    return this.menuItems.filter(
+      (item) => item.category === this.selectedCategory
+    );
+  }
+
+   // Return the menu items which have quantity > 0 (selected items)
+ getSelectedItems() {
+  return this.menuItems.filter((item) => item.quantity > 0);
+}
+
+ // Calculate total price of selected items based on quantity and unit price
+  getTotalPrice() {
+    return this.getSelectedItems().reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  }
+
+  // Called when the user places an order
+  placeOrder() {
+     // If no items selected, do nothing
+    if (this.getSelectedItems().length === 0) return;
+
+    // Generate a random 6-character alphanumeric order number (uppercase)
+    this.orderNumber = Math.random().toString(36).substr(2, 6).toUpperCase();
+
+    // Show the success message
+    this.orderPlaced = true;
+
+    // Clear selected quantities
+    for (let item of this.menuItems) {
+      item.quantity = 0;
+    }
+  }
+}
+
+

@@ -1,5 +1,29 @@
-
 .custom-welcome {
-  background-color: #f4e8d4; /* Soft beige or any custom color */
+  background-color: #f4e8d4;
   color: #333;
+}
+.menu-btn a {
+  border: none;
+  border-radius: 25px;
+  padding: 5px 22px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+.menu-gold-btn {
+  background-color: #d4af37;
+  color: #2f2519;
+}
+
+.menu-gold-btn:hover {
+  background-color: #d4af37 !important;
+  color: rgb(239, 239, 239) !important;
+}
+
+.menu-green-btn {
+  background-color: #28a745;
+  color: white !important;
+}
+
+.menu-green-btn:hover {
+  background-color: #218838 !important;
 }

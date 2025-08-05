@@ -1,0 +1,36 @@
+.dropdown-select {
+  background-color: #4a3f31;
+  color: #fff;
+  border: none;
+  min-width: 250px;
+  width: auto;
+  padding: 8px 12px;
+  border-radius: 6px;
+  appearance: none;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.menu-img {
+  transition: transform 0.3s ease;
+  transform-origin: right center;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-img:hover {
+  transform: scale(2.9);
+  z-index: 10;
+  transform-origin: left center;
+}
+
+.order-btn {
+  background-color: #4a3f31;
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+}
+

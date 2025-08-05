@@ -1,0 +1,84 @@
+<!-- Title -->
+<h2 class="text-center mb-4" style="color: #2c2c2c; font-family: 'Georgia', serif">
+  Explore Our Menu
+</h2>
+
+<!-- Category Filter -->
+<div class="text-center mb-4">
+  <select class="form-select w-auto d-inline-block" [(ngModel)]="selectedCategory">
+    <option value="">All Categories</option>
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option><!-- Title -->
+<h2 class="text-center mb-4" style="color: #2c2c2c; font-family: 'Georgia', serif">
+  Explore Our Menu
+</h2>
+
+<!-- Category Filter -->
+<div class="text-center mb-4">
+  <select class="form-select w-auto d-inline-block" [(ngModel)]="selectedCategory">
+    <option value="">All Categories</option>
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option>
+  </select>
+</div>
+
+<!-- Order Confirmation -->
+<div class="alert alert-success text-center mt-4" *ngIf="orderPlaced">
+  Your order has been placed!<br />
+  <strong>Order Number: {{ orderNumber }}</strong>
+</div>
+
+  </select>
+</div>
+
+<!-- Grid Menu Layout -->
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="col" *ngFor="let item of getFilteredItems(); let i = index">
+      <div class="card h-100 shadow-sm border-0" style="background-color: #fdf8f3">
+        <img [src]="item.image" class="card-img-top img fluid" alt="{{ item.name }}" style="height: 350px; object-fit: cover" />
+        <div class="card-body">
+          <h5 class="card-title" style="color: #4a3f31">{{ item.name }}</h5>
+          <p class="card-text text-muted">{{ item.description }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span style="color: #575757; font-weight: bold">${{ item.price }}</span>
+            <select
+              [(ngModel)]="item.quantity"
+              class="form-select form-select-sm w-auto"
+            >
+              <option *ngFor="let qty of [0,1,2,3,4,5,6,7,8,9,10]" [value]="qty">{{ qty }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order Summary -->
+<div class="container mt-5" *ngIf="getSelectedItems().length > 0">
+  <h4 class="mb-3">Your Order</h4>
+  <ul class="list-group mb-3">
+    <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of getSelectedItems()">
+      <div>
+        <strong>{{ item.name }}</strong>
+        <span class="text-muted"> x{{ item.quantity }}</span>
+      </div>
+      <span class="text-dark">${{ item.price * item.quantity | number: '1.2-2' }}</span>
+    </li>
+  </ul>
+  <div class="text-end fw-bold mb-3">
+    Total: ${{ getTotalPrice() | number : '1.2-2' }}
+  </div>
+  <div class="text-end">
+    <button class="btn btn-success px-4" (click)="placeOrder()">Place Order</button>
+  </div>
+</div>
+
+<!-- Order Confirmation -->
+<div class="alert alert-success text-center mt-4" *ngIf="orderPlaced">
+  Your order has been placed!<br />
+  <strong>Order Number: {{ orderNumber }}</strong>
+</div>

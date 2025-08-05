@@ -1,0 +1,140 @@
+<!-- ======= Header Section with Title and Buttons ======= -->
+<div class="position-relative d-flex align-items-center mb-3">
+  <!--Title -->
+  <h2 class="menu-title mx-auto">Create Your Custom Menu</h2>
+
+  <!-- Buttons aligned to the right -->
+  <div class="ms-auto">
+    <!-- Toggle to view all items -->
+    <button
+      class="btn btn-outline-primary me-3 rounded-pill"
+      (click)="viewSelectedItems = false; loadSelections()"
+    >
+      View All
+    </button>
+    <!-- Toggle to view only selected items -->
+    <button
+      class="btn btn-primary rounded-pill"
+      (click)="viewSelectedItems = true"
+    >
+      View Selected
+    </button>
+  </div>
+</div>
+
+<!-- Show selected items list IF there are items -->
+<div *ngIf="viewSelectedItems" class="container mt-4">
+  <h3 class="mb-3" style="font-family: 'Poppins', sans-serif; color: #444">
+    Your Selected Items
+  </h3>
+
+  <div *ngIf="selectedItems.length > 0; else noSelection">
+    <div class="list-group">
+      <!-- Loop through selected items -->
+      <div
+        *ngFor="let item of selectedItems"
+        class="list-group-item d-flex align-items-center justify-content-between rounded shadow-sm mb-2"
+        style="background-color: #f7f3e9"
+      >
+        <!-- Item image and info -->
+        <div class="d-flex align-items-center">
+          <img
+            [src]="item.image"
+            alt="{{ item.name }}"
+            class="rounded"
+            style="
+              width: 80px;
+              height: 60px;
+              object-fit: cover;
+              margin-right: 15px;
+            "
+          />
+          <div>
+            <!-- Item name -->
+            <div style="font-weight: 600; font-size: 1rem; color: #3e2f20">
+              {{ item.name }}
+            </div>
+            <!-- Item price -->
+            <div style="color: #b6862e">${{ item.price }}</div>
+          </div>
+        </div>
+        <!-- Quantity input and remove button -->
+        <div class="d-flex align-items-center gap-3">
+          <input
+            type="number"
+            min="1"
+            max="10"
+            [(ngModel)]="item.quantity"
+            class="form-control form-control-sm"
+            style="width: 70px"
+          />
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="removeSelectedItem(item.id)"
+            title="Remove item"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Template to show if NO items are selected -->
+  <ng-template #noSelection>
+    <p class="text-muted" style="font-style: italic">No items selected yet.</p>
+  </ng-template>
+</div>
+
+<!-- Show full items grid ONLY if viewSelectedItems = false -->
+<div *ngIf="!viewSelectedItems" class="container">
+  <div class="row g-3">
+    <!-- Loop through all items -->
+    <div
+      class="col-6 col-sm-4 col-md-3 col-lg-2"
+      *ngFor="let item of customItems"
+    >
+      <!-- Individual item card -->
+      <div
+        class="position-relative p-2 rounded-3 shadow-sm text-center item-tile"
+      >
+        <!-- Item image -->
+        <div class="image-container mb-2">
+          <img
+            [src]="item.image"
+            alt="{{ item.name }}"
+            class="img-fluid rounded-2 item-image"
+          />
+        </div>
+        <!-- Item name -->
+        <div style="font-size: 0.9rem; font-weight: 500">
+          {{ item.name }}
+        </div>
+        <!-- Item price -->
+        <div class="text-muted" style="font-size: 0.8rem">
+          ${{ item.price }}
+        </div>
+        <!-- Quantity dropdown -->
+        <select
+          [(ngModel)]="item.quantity"
+          class="form-select form-select-sm mt-1"
+          style="width: 100%"
+        >
+          <!-- Looping the qty -->
+          <option *ngFor="let qty of [0, 1, 2, 3, 4, 5]" [value]="qty">
+            {{ qty }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save button -->
+  <div class="text-center mt-4">
+    <button
+      class="btn btn-success px-4 py-2 rounded-pill"
+      (click)="saveSelections()"
+    >
+      Save My Selection
+    </button>
+  </div>
+</div>

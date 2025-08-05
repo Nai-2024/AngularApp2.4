@@ -1,0 +1,23 @@
+select.form-select {
+  border: none;
+  box-shadow: none !important;
+}
+
+.item-tile {
+  background-color: #f0e9d2; /* a soft warm cream */
+  transition: background-color 0.3s ease;
+  border-radius: 12px;
+}
+
+.item-tile:hover {
+  background-color: #f0de9c; /* slightly darker shade on hover */
+}
+
+h2 {
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
